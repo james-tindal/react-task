@@ -16,8 +16,7 @@ type select_post = Action<number>
 export const postsAndUsers = createSlice({
   name: 'postsAndUsers',
   initialState: {
-    queryResult: Result.loading,
-    selectedPostId: 1
+    queryResult: Result.loading
   } as State,
   reducers: {
     get_posts_result: 

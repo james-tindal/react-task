@@ -6,7 +6,7 @@ import { PostMenuItem } from "./PostMenuItem"
 
 
 export const PostMenu = ({ status, data, selectedPostId, select_post }) =>
-  <>{
+  <div>{
     status === 'loading' ? 'Loading...' :
     status === 'error'   ? 'Error'
     : data.posts.map(post =>
@@ -15,7 +15,7 @@ export const PostMenu = ({ status, data, selectedPostId, select_post }) =>
         author={data.users.find(user => user.id === post.userId).name}
         onClick={() => select_post(post.id)}
         selected={post.id === selectedPostId} />)
-  }</>
+  }</div>
 
 PostMenu.Smart = connect(
   ({

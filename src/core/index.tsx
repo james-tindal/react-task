@@ -8,14 +8,16 @@ import { createEpicMiddleware } from 'redux-observable'
 
 import './index.css'
 import { rootEpic } from './epics'
-import { PostMenu } from '../components/PostMenu'
 import { Layout } from '../views/Layout'
+import { router } from './router'
 
 const epicMiddleware = createEpicMiddleware()
 
+
 const store = configureStore({
   reducer: {
-    [postsAndUsers.name]: postsAndUsers.reducer
+    [postsAndUsers.name]: postsAndUsers.reducer,
+    [router.name]: router.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(epicMiddleware)
@@ -29,7 +31,7 @@ export type AppDispatch = typeof store.dispatch
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <Layout />
+      <Layout.Smart />
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')

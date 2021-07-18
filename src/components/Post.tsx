@@ -1,9 +1,10 @@
-import { connect, useSelector } from "react-redux"
+import { connect } from "react-redux"
 import { RootState } from "../core"
 
 export const _Post = ({ author, title, body }) => <>
-  <h1 className="sz-2">{title}</h1>
-  <div><a href="">{author.name}</a></div>
+  <button className="bg-blue-400 text-gray-100 px-2 rounded hover:bg-blue-300">Edit</button>
+  <h1 className="text-4xl">{title}</h1>
+  <div className="pb-6">by <a href="">{author.name}</a></div>
   <div>{body}</div>
 </>
 
@@ -17,8 +18,10 @@ export const Post = ({ selectedPostId, queryResult: q }) =>
   <>{
     q.status === 'loading' ? 'Loading...' :
     q.status === 'error'   ? 'Error'
-    : <_Post {...select({ ...q, selectedPostId })} />
+    : <_Post {...select({ ...q.data, selectedPostId })} />
   }</>
 
 Post.Smart = connect(
-  ({ postsAndUsers }: RootState) => postsAndUsers)
+  ({ postsAndUsers: { queryResult }, router: route }: RootState) =>
+    ({ queryResult, selectedPostId: route[1] })
+)(Post)
