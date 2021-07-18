@@ -5,24 +5,28 @@ import { PostMenuItem } from "./PostMenuItem"
 
 
 
-export const PostMenu = ({ status, result, selectedPostId, select_post }) =>
-  <div className="overflow-scroll">{
+export const PostMenu = ({ status, data, selectedPostId, select_post }) =>
+  <>{
     status === 'loading' ? 'Loading...' :
     status === 'error'   ? 'Error'
-    : result.data.posts.map(post =>
+    : data.posts.map(post =>
       <PostMenuItem {...post}
         key={post.id}
-        onClick={select_post(post.id)}
+        author={data.users.find(user => user.id === post.userId).name}
+        onClick={() => select_post(post.id)}
         selected={post.id === selectedPostId} />)
-  }</div>
+  }</>
 
 PostMenu.Smart = connect(
   ({
-    queryResult,
-    selectedPostId
-  }: RootState["postsAndUsers"]) => ({
-    result: queryResult,
-    status: queryResult?.status,
+    postsAndUsers: {
+// @ts-ignore
+      queryResult: { status, data },
+      selectedPostId
+    }
+  }: RootState) => ({
+    data,
+    status,
     selectedPostId
   }),
   { select_post: postsAndUsers.actions.select_post

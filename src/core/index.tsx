@@ -9,6 +9,7 @@ import { createEpicMiddleware } from 'redux-observable'
 import './index.css'
 import { rootEpic } from './epics'
 import { PostMenu } from '../components/PostMenu'
+import { Layout } from '../views/Layout'
 
 const epicMiddleware = createEpicMiddleware()
 
@@ -28,7 +29,7 @@ export type AppDispatch = typeof store.dispatch
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <PostMenu.Smart />
+      <Layout />
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')
