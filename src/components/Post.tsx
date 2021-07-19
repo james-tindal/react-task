@@ -9,7 +9,7 @@ const Post_ = ({ author, title, body, id }) => <>
   <h1 className="text-4xl">{title}</h1>
   <div className="pb-6">by <Link to={'/user/' + author.id} className="text-blue-400 cursor-pointer">{author.name}</Link>
   </div>
-  <div>{body}</div>
+  <div className="whitespace-pre-wrap">{body}</div>
 </>
 
 const select = ({ users, posts, selectedPostId }) => {
