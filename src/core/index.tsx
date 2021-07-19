@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import { postsAndUsers } from './postsAndUsers'
 import { createEpicMiddleware } from 'redux-observable'
 
 import './index.css'
+import { postsAndUsers } from './postsAndUsers'
 import { rootEpic } from './epics'
-import { Layout } from '../views/Layout'
-import { router } from './router'
+import { routeListener, router } from './router'
+import { App } from '../views/App'
 
 const epicMiddleware = createEpicMiddleware()
 
@@ -23,6 +23,7 @@ const store = configureStore({
     getDefaultMiddleware().concat(epicMiddleware)
 })
 epicMiddleware.run(rootEpic)
+routeListener(store)
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
@@ -31,7 +32,7 @@ export type AppDispatch = typeof store.dispatch
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <Layout.Smart />
+      <App.Smart />
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')

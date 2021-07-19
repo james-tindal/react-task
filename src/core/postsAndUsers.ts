@@ -11,7 +11,6 @@ type Action<T> = {
   payload: T
 }
 type get_posts_result = Action<Result>
-type select_post = Action<number>
 
 export const postsAndUsers = createSlice({
   name: 'postsAndUsers',
@@ -22,8 +21,12 @@ export const postsAndUsers = createSlice({
     get_posts_result: 
       (state: State, { payload }: get_posts_result) =>
         ({ ...state, queryResult: payload }),
-    select_post:
-      (state: State, { payload }: select_post) =>
-        ({ ...state, selectedPostId: payload })
+    update_post:
+      (state: State, { payload: {id, title, body} }) => {
+        // @ts-ignore
+        const post = state.queryResult.data.posts.find(post => post.id === id)
+        post.title = title
+        post.body = body
+      }
   }
 })

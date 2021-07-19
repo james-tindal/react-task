@@ -1,11 +1,10 @@
 import { connect } from "react-redux"
 import { RootState } from "../core"
-import { postsAndUsers } from "../core/postsAndUsers"
 import { PostMenuItem } from "./PostMenuItem"
 
 
 
-export const PostMenu = ({ status, data, selectedPostId, select_post }) =>
+export const PostMenu = ({ status, data, selectedPostId }) =>
   <div>{
     status === 'loading' ? 'Loading...' :
     status === 'error'   ? 'Error'
@@ -13,7 +12,6 @@ export const PostMenu = ({ status, data, selectedPostId, select_post }) =>
       <PostMenuItem {...post}
         key={post.id}
         author={data.users.find(user => user.id === post.userId).name}
-        onClick={() => select_post(post.id)}
         selected={post.id === selectedPostId} />)
   }</div>
 
@@ -22,13 +20,11 @@ PostMenu.Smart = connect(
     postsAndUsers: {
 // @ts-ignore
       queryResult: { status, data },
-      selectedPostId
-    }
+    },
+    router
   }: RootState) => ({
     data,
     status,
-    selectedPostId
-  }),
-  { select_post: postsAndUsers.actions.select_post
-  }
+    selectedPostId: Number(router.params.id)
+  })
 )(PostMenu)
