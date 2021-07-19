@@ -8,7 +8,7 @@ const User_ = ({ name, website, company, posts }) =>
   <div>Website: <a className="text-blue-400" href={'http://' + website}>{website}</a></div>
   <div>Company: {company.name}</div>
 
-  <h1 className="text-2xl mt-4">Photo albums</h1>
+  {/* <h1 className="text-2xl mt-4">Photo albums</h1> */}
 
   <h1 className="text-2xl mt-4">Posts</h1>
   <div>{posts.map(post => <Link className="block text-blue-400" to={'/post/' + post.id}>{post.title}</Link>)}</div>
@@ -27,7 +27,3 @@ export const User = ({ userId, queryResult: q }) =>
 User.Smart = connect(({ router, postsAndUsers: { queryResult }}: RootState) =>
   ({ userId: router.params.id, queryResult })
 )(User)
-
-
-// Get the selected user on the route  router.params.id
-// postsAndUsers.
